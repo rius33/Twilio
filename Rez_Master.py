@@ -10,5 +10,5 @@ def hello():
     return 'Hello World!'
 
 @app.route('/james')
-def hello():
+def he():
     return 'Fuck You!'
