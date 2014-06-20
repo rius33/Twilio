@@ -10,6 +10,8 @@ import twilio
 # AUTH_TOKEN = "79f744af5e9e19fae4215c4a4b602flf"
 ACCOUNT_SID = "ACbdc62d802802d2191bdf844bfd208461"
 AUTH_TOKEN = "8238ad2b6e2bdd428391914b780fc5c4"
+T_NUM = '+18602375985'
+E_NUM = '+16304733343'
 
 app = Flask(__name__)
 
@@ -32,7 +34,7 @@ def SMS(Numbers, Body):
         message = client.messages.create(
             body=Body, #Body is Str of message NOT TWIML
             to=number,
-            from_="+18602375985", #Twilio number
+            from_=E_NUM, #Twilio number
         )
         print message.sid
 
