@@ -3,8 +3,9 @@ __author__ = 'DT'
 
 import os
 from flask import Flask, request
-from twilio.rest import TwilioRestClient
 import twilio
+from twilio.rest import TwilioRestClient
+
 
 # ACCOUNT_SID = "ACd44d711fa3867cbb1d77184dc48a69b2"
 # AUTH_TOKEN = "79f744af5e9e19fae4215c4a4b602flf"
