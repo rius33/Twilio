@@ -47,8 +47,6 @@ def receive1():
     resp = twilio.twiml.Response()
     resp.message(incMessage)
 
-
-
     return str(resp)
 
 
@@ -56,4 +54,4 @@ def receive1():
 def receive(From, To, Body):
     pass
 # a = ["+18604605536", "+19802970490", "+18603264336"]
-# SMS(a, "Yo this is Steve. Pumped to get into tomorrow let's throw a banger.")
+# SMS(a, "Yo this is Steve. Pumped to get in tomorrow let's throw a banger.")
