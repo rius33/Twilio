@@ -28,7 +28,6 @@ def receive1():
     incMessage = request.values.get('Body')
     DEBUG_DICTIONARY.append(from_num)
     DEBUG_DICTIONARY.append(incMessage)
-    SMS(['+18603264336'], incMessage)
     resp = twilio.twiml.Response()
     resp.message(incMessage)
     DEBUG_DICTIONARY.append(str(resp))
@@ -40,13 +39,14 @@ def deb():
 
 
 def SMS(Numbers, Body):
+    # SOMETHING IS BROKEN
     # Download the Python helper library from twilio.com/docs/python/install
     for number in Numbers:
         client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
         message = client.messages.create(
             body=Body, #Body is Str of message NOT TWIML
             to=number,
-            from_=E_NUM #Twilio number
+            from_=E_NUM, #Twilio number
         )
         print message.sid
 
