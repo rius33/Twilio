@@ -40,7 +40,7 @@ def SMS(Numbers, Body):
         )
         print message.sid
 
-@app.route('/17_Nauyaug', methods = ['GET', 'POST'])
+@app.route('/abc', methods = ['GET', 'POST'])
 def receive1():
     from_num = request.values.get('From', None)
     incMessage = request.values.get('Body')
