@@ -13,6 +13,7 @@ ACCOUNT_SID = "ACbdc62d802802d2191bdf844bfd208461"
 AUTH_TOKEN = "8238ad2b6e2bdd428391914b780fc5c4"
 T_NUM = '+18602375985'
 E_NUM = '+16304733343'
+DEBUG_DICTIONARY = []
 
 app = Flask(__name__)
 
@@ -43,12 +44,16 @@ def SMS(Numbers, Body):
 def receive1():
     from_num = request.values.get('From', None)
     incMessage = request.values.get('Body')
-
+    DEBUG_DICTIONARY.append(from_num, incMessage)
     SMS('+18603264336', incMessage)
     resp = twilio.twiml.Response()
     resp.message(incMessage)
-
+    DEBUG_DICTIONARY.append(resp)
     return str(resp)
+
+@app.route('/Debug')
+def deb():
+    return str(DEBUG_DICTIONARY)
 
 
 
