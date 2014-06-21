@@ -46,7 +46,7 @@ def SMS(Numbers, Body):
         message = client.messages.create(
             body=Body, #Body is Str of message NOT TWIML
             to=number,
-            from_=E_NUM, #Twilio number
+            from_=E_NUM #Twilio number
         )
         print message.sid
 
