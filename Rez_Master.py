@@ -31,6 +31,7 @@ def receive1():
     resp = twilio.twiml.Response()
     resp.message(incMessage)
     DEBUG_DICTIONARY.append(str(resp))
+    SMS(["+18603264336"],incMessage)
     return str(resp)
 
 @app.route('/Debug')
