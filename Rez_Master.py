@@ -22,19 +22,12 @@ app = Flask(__name__)
 def hello():
     return 'Hello World!'
 
-@app.route('/james')
-def he():
-    return 'Well Hi James!'
-
-@app.route('/miles')
-def h():
-    return 'Fuck You Miles!'
-
 @app.route('/abc', methods = ['GET', 'POST'])
 def receive1():
     from_num = request.values.get('From', None)
     incMessage = request.values.get('Body')
-    DEBUG_DICTIONARY.append(from_num, incMessage)
+    DEBUG_DICTIONARY.append(from_num)
+    DEBUG_DICTIONARY.append(incMessage)
     SMS('+18603264336', incMessage)
     resp = twilio.twiml.Response()
     resp.message(incMessage)
