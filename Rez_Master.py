@@ -30,17 +30,6 @@ def he():
 def h():
     return 'Fuck You Miles!'
 
-def SMS(Numbers, Body):
-    # Download the Python helper library from twilio.com/docs/python/install
-    for number in Numbers:
-        client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-        message = client.messages.create(
-            body=Body, #Body is Str of message NOT TWIML
-            to=number,
-            from_=E_NUM, #Twilio number
-        )
-        print message.sid
-
 @app.route('/abc', methods = ['GET', 'POST'])
 def receive1():
     from_num = request.values.get('From', None)
@@ -56,6 +45,17 @@ def receive1():
 def deb():
     return str(DEBUG_DICTIONARY)
 
+
+def SMS(Numbers, Body):
+    # Download the Python helper library from twilio.com/docs/python/install
+    for number in Numbers:
+        client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
+        message = client.messages.create(
+            body=Body, #Body is Str of message NOT TWIML
+            to=number,
+            from_=E_NUM, #Twilio number
+        )
+        print message.sid
 
 
 def receive(From, To, Body):
