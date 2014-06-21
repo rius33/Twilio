@@ -28,7 +28,6 @@ def receive1():
     incMessage = request.values.get('Body')
     DEBUG_DICTIONARY.append(from_num)
     DEBUG_DICTIONARY.append(incMessage)
-    SMS(E_NUM, incMessage)
     resp = twilio.twiml.Response()
     resp.message(incMessage)
     DEBUG_DICTIONARY.append(resp)
