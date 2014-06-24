@@ -14,7 +14,7 @@ ACCOUNT_SID = "ACbdc62d802802d2191bdf844bfd208461"
 AUTH_TOKEN = "8238ad2b6e2bdd428391914b780fc5c4"
 T_NUM = '+18602375985'
 E_NUM = '+16304733343'
-DEBUG_DICTIONARY = []
+#DEBUG_DICTIONARY = []
 
 app = Flask(__name__)
 
@@ -26,17 +26,17 @@ def hello():
 def receive1():
     from_num = request.values.get('From', None)
     incMessage = request.values.get('Body')
-    DEBUG_DICTIONARY.append(from_num)
-    DEBUG_DICTIONARY.append(incMessage)
-    resp = twilio.twiml.Response()
-    resp.message(incMessage)
-    DEBUG_DICTIONARY.append(str(resp))
-    SMS(["+18603264336"],incMessage)
-    return str(resp)
+    #DEBUG_DICTIONARY.append(from_num)
+    #DEBUG_DICTIONARY.append(incMessage)
+    #resp = twilio.twiml.Response()
+    #resp.message(incMessage)
+    #DEBUG_DICTIONARY.append(str(resp))
+    SMS([from_num], incMessage)
+    #return str(resp)
 
-@app.route('/Debug')
-def deb():
-    return str(DEBUG_DICTIONARY)
+#@app.route('/Debug')
+#def deb():
+#    return str(DEBUG_DICTIONARY)
 
 
 def SMS(Numbers, Body):
@@ -59,3 +59,8 @@ def receive(From, To, Body):
 
 if __name__ == "__main__":
     SMS(["+18603264336"],"fuck you")
+
+
+    ''' message.replace("<Say>", "<Response><Say>")
+        message.replace("</Say>", "</Response></Say>")
+    '''
