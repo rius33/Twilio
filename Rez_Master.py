@@ -57,7 +57,7 @@ def call(Numbers):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
     call = client.calls.create(to=Numbers[0],  # Any phone number
                            from_=T_NUM, # Must be a valid Twilio number
-                           url="http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient")
+                           url="http://obscure-savannah-9638.herokuapp.com/")
 
 #def receive(From, To, Body):
  #   pass
