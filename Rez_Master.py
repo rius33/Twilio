@@ -72,7 +72,7 @@ def handle():
 
     # If the caller pressed anything but 1, redirect them to the homepage.
     else:
-        redirect("/abc")
+        return redirect("/13Oak")
 
 @app.route('/Debug')
 def deb():
