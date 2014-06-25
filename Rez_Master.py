@@ -54,23 +54,25 @@ def receiveCall():
         caller = "Nemo"
     resp = twilio.twiml.Response()
     resp.say("Hello, " + caller)
+    with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
+        g.say("To speak to a real person, press 1. Press any other key to start over.")
     return str(resp)
 
 
 
-# @app.route('/handle-key', methods=['GET', 'POST'])
-# def handle():
-#     digit_pressed = request.values.get('Digits', None)
-#     if digit_pressed == "1":
-#         resp = twilio.twiml.Response()
-#         resp.say("Thank you for pressing 1")
-#         # If the dial fails:
-#         #resp.say("The call failed, or the remote party hung up. Goodbye.")
-#         return str(resp)
-#
-#     # If the caller pressed anything but 1, redirect them to the homepage.
-#     else:
-#         return redirect("/abc")
+@app.route('/handle-key', methods=['GET', 'POST'])
+def handle():
+    digit_pressed = request.values.get('Digits', None)
+    if digit_pressed == "1":
+        resp = twilio.twiml.Response()
+        resp.say("Thank you for pressing 1")
+        # If the dial fails:
+        #resp.say("The call failed, or the remote party hung up. Goodbye.")
+        return str(resp)
+
+    # If the caller pressed anything but 1, redirect them to the homepage.
+    else:
+        return redirect("/abc")
 
 @app.route('/Debug')
 def deb():
