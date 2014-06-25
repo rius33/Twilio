@@ -20,10 +20,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return 'Hello World!'
+    return '<Say>'
 
 @app.route('/abc', methods = ['GET', 'POST'])
-def receive1():
+def receive():
     from_num = request.values.get('From', None)
     incMessage = request.values.get('Body')
     #DEBUG_DICTIONARY.append(from_num)
@@ -31,7 +31,7 @@ def receive1():
     #resp = twilio.twiml.Response()
     #resp.message(incMessage)
     #DEBUG_DICTIONARY.append(str(resp))
-    SMS([from_num], incMessage)
+    sms([from_num], incMessage)
     #return str(resp)
 
 #@app.route('/Debug')
@@ -39,11 +39,8 @@ def receive1():
 #    return str(DEBUG_DICTIONARY)
 
 
-def SMS(Numbers, Body):
-    # SOMETHING IS BROKEN
-    # Download the Python helper library from twilio.com/docs/python/install
+def sms(Numbers, Body):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-    print ACCOUNT_SID, AUTH_TOKEN
     message = client.messages.create(
         to=Numbers[0],
         from_=T_NUM, #Twilio number
@@ -52,13 +49,16 @@ def SMS(Numbers, Body):
     print message.sid
 
 
-def receive(From, To, Body):
+def call(Numbers, Body):
     pass
+
+#def receive(From, To, Body):
+ #   pass
 # a = ["+18604605536", "+19802970490", "+18603264336"]
 # SMS(a, "Yo this is Steve. Pumped to get in tomorrow let's throw a banger.")
 
 if __name__ == "__main__":
-    SMS(["+18603264336"],"fuck you")
+    sms(["+18603264336"], "fuck you")
 
 
     ''' message.replace("<Say>", "<Response><Say>")
