@@ -81,6 +81,7 @@ def con():
     resp = twilio.twiml.Response()
     resp.say("Joining the conference.")
     resp.dial(Conference="Lounge")
+    return str(resp)
 
 def sms(Numbers, Body):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
