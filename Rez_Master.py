@@ -53,8 +53,8 @@ def receiveCall():
     else:
         caller = "Nemo"
     resp = twilio.twiml.Response()
-    resp.say("Hello, " + caller).voice('woman')
     resp.say("Hello, " + caller)
+    resp.replace("<Say>", "<Say voice=\"woman>\"")
     with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
         g.say("To speak to a real person, press 1. Press any other key to start over.")
     return str(resp)
