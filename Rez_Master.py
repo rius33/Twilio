@@ -20,7 +20,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return '<Say>'
+    return 'Hello!'
 
 @app.route('/abc', methods = ['GET', 'POST'])
 def receive():
