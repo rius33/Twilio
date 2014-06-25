@@ -80,7 +80,8 @@ def deb():
 def con():
     resp = twilio.twiml.Response()
     resp.say("Joining the conference.")
-    resp.dial(Conference="Lounge")
+    lounge = twilio.twiml.Response().dial().conference()
+    resp.dial(conference=lounge)
     return str(resp)
 
 def sms(Numbers, Body):
@@ -99,11 +100,6 @@ def call(Numbers):
     call = client.calls.create(to=Numbers[0],  # Any phone number
                            from_=T_NUM, # Must be a valid Twilio number
                            url="http://obscure-savannah-9638.herokuapp.com/")
-
-#def receive(From, To, Body):
- #   pass
-# a = ["+18604605536", "+19802970490", "+18603264336"]
-# SMS(a, "Yo this is Steve. Pumped to get in tomorrow let's throw a banger.")
 
 #if __name__ == "__main__":
 
