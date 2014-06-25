@@ -14,6 +14,10 @@ ACCOUNT_SID = "ACbdc62d802802d2191bdf844bfd208461"
 AUTH_TOKEN = "8238ad2b6e2bdd428391914b780fc5c4"
 T_NUM = '+18602375985'
 E_NUM = '+16304733343'
+CALLERS = {
+        "+18604605536": "Thomas",
+        "+18609176080": "James"
+}
 DEBUG_DICTIONARY = []
 
 app = Flask(__name__)
@@ -21,15 +25,20 @@ app = Flask(__name__)
 @app.route('/', methods = ['GET', 'POST'])
 def hello():
     resp = twilio.twiml.Response()
-    resp.say("Hello Monkey")
+    resp.say("Hello, we appreciate your call and will get back to you as soon as possible.")
     return str(resp)
 
 @app.route('/abc', methods = ['GET', 'POST'])
 def receive():
     from_num = request.values.get('From', None)
     incMessage = request.values.get('Body')
-    sms([from_num], incMessage)
-    call([from_num])
+    if (from_num) in CALLERS:
+        caller = CALLERS[from_num]
+    else:
+        caller = "Nemo"
+    sms([T_NUM], caller)
+    # sms([from_num], incMessage)
+    # call([from_num])
     #DEBUG_DICTIONARY.append(from_num)
     #DEBUG_DICTIONARY.append(incMessage)
     #resp = twilio.twiml.Response()
@@ -38,9 +47,9 @@ def receive():
     #sms([from_num], incMessage)
     #return str(resp)
 
-#@app.route('/Debug')
-#def deb():
-#    return str(DEBUG_DICTIONARY)
+@app.route('/Debug')
+def deb():
+    return str(DEBUG_DICTIONARY)
 
 
 def sms(Numbers, Body):
@@ -64,8 +73,8 @@ def call(Numbers):
 # a = ["+18604605536", "+19802970490", "+18603264336"]
 # SMS(a, "Yo this is Steve. Pumped to get in tomorrow let's throw a banger.")
 
-#if __name__ == "__main__":
-#    call(["+18603264336"])
+if __name__ == "__main__":
+    receive()
 
 
     ''' message.replace("<Say>", "<Response><Say>")
