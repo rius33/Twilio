@@ -18,7 +18,8 @@ CALLERS = {
         "+18604605536": "Thomas",
         "+18609176080": "James",
         "+19802970490": "Miles",
-        "+18603264336": "Tim"
+        "+18603264336": "Tim",
+        "+16462563954": "Eddie"
 }
 DEBUG_DICTIONARY = []
 
@@ -33,20 +34,14 @@ def hello():
 @app.route('/7Boyden', methods=['GET', 'POST'])
 def receiveSMS():
     from_num = request.values.get('From', None)
-    incMessage = request.values.get('Body')
-    if (CALLERS[from_num] == "Tim"):
-        sms(["+18603264336"], from_num + " " + incMessage)
-    # if (from_num) in CALLERS:
-    #     caller = CALLERS[from_num]
-    # else:
-    #     caller = "Nemo"
-    # sms([from_num], "Hello " + caller)
-    # Say a command, and listen for the caller to press a key. When they press
-    # a key, redirect them to /handle-key.
-    # with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
-    #     g.say("To speak to a real person, press 1. Press any other key to start over.")
-    #resp = twilio.twiml.Response()
-    #resp.message(incMessage)
+    body = request.values.get('Body')
+    if CALLERS[from_num] == "Tim":
+        if body[0:2] == "-m":
+            sms([body[3:15]], body[16:])
+        else:
+            sms(["+18603264336"], from_num + " " + body)
+    else:
+        sms(["+18603264336"], from_num + " " + body)
 
 @app.route('/13Oak', methods=('GET', 'POST'))
 def receiveCall():
@@ -58,7 +53,7 @@ def receiveCall():
     resp = twilio.twiml.Response()
     resp.say("Hello, " + caller, voice="woman")
     with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
-        g.say("To speak to Tim, press 1. To access the conference line, press 2.")
+        g.say("To speak to Tim, press 1. To access the conference line, press 2.", voice="woman")
     return str(resp)
 
 
