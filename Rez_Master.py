@@ -80,7 +80,8 @@ def deb():
 def con():
     resp = twilio.twiml.Response()
     resp.say("Joining the conference.")
-    resp.dial.conference("Lounge")
+    lounge = twilio.twiml.Conference()
+    resp.dial(lounge)
     return str(resp)
 
 def sms(Numbers, Body):
