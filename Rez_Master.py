@@ -29,7 +29,7 @@ def hello():
     resp.say("Hello, we appreciate your call and will get back to you as soon as possible.")
     return str(resp)
 
-@app.route('/abc', methods = ['GET', 'POST'])
+@app.route('/abc', methods=['GET', 'POST'])
 def receive():
     from_num = request.values.get('From', None)
     incMessage = request.values.get('Body')
@@ -41,8 +41,8 @@ def receive():
     resp.say("Hello, " + caller)
     # Say a command, and listen for the caller to press a key. When they press
     # a key, redirect them to /handle-key.
-    with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
-        g.say("To speak to a real person, press 1. Press any other key to start over.")
+    # with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
+    #     g.say("To speak to a real person, press 1. Press any other key to start over.")
     #resp = twilio.twiml.Response()
     #resp.message(incMessage)
 
