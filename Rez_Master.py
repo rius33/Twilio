@@ -2,7 +2,7 @@ __author__ = 'DT'
 
 
 import os
-from flask import Flask, request
+from flask import Flask, request, redirect
 import twilio
 from twilio import twiml
 from twilio.rest import TwilioRestClient
@@ -16,13 +16,14 @@ T_NUM = '+18602375985'
 E_NUM = '+16304733343'
 CALLERS = {
         "+18604605536": "Thomas",
-        "+18609176080": "James"
+        "+18609176080": "James",
+        "+19802970490": "Miles"
 }
 DEBUG_DICTIONARY = []
 
 app = Flask(__name__)
 
-@app.route('/', methods = ['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def hello():
     resp = twilio.twiml.Response()
     resp.say("Hello, we appreciate your call and will get back to you as soon as possible.")
@@ -32,24 +33,43 @@ def hello():
 def receive():
     from_num = request.values.get('From', None)
     incMessage = request.values.get('Body')
+    resp = twilio.twiml.Response()
     if (from_num) in CALLERS:
         caller = CALLERS[from_num]
     else:
         caller = "Nemo"
-    sms([from_num], "Hello, " + caller)
-    # call([from_num])
-    #DEBUG_DICTIONARY.append(from_num)
-    #DEBUG_DICTIONARY.append(incMessage)
+    resp.say("Hello, " + caller)
+    # Say a command, and listen for the caller to press a key. When they press
+    # a key, redirect them to /handle-key.
+    with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
+        g.say("To speak to a real person, press 1. Press any other key to start over.")
     #resp = twilio.twiml.Response()
     #resp.message(incMessage)
-    #DEBUG_DICTIONARY.append(str(resp))
-    #sms([from_num], incMessage)
-    #return str(resp)
+
+@app.route('/handle-key', methods=['GET', 'POST'])
+def handle():
+    digit_pressed = request.values.get('Digits', None)
+    if digit_pressed == "1":
+        resp = twilio.twiml.Response()
+        resp.say("Thank you for pressing 1")
+        # If the dial fails:
+        #resp.say("The call failed, or the remote party hung up. Goodbye.")
+        return str(resp)
+
+    # If the caller pressed anything but 1, redirect them to the homepage.
+    else:
+        return redirect("/abc")
 
 @app.route('/Debug')
 def deb():
     return str(DEBUG_DICTIONARY)
 
+@app.route('/conference', methods=['GET', 'POST'])
+def con():
+    resp = twilio.twiml.Response()
+    resp.say("Joining the conference.")
+    resp.dial.conference("NewConference")
+    return str(resp)
 
 def sms(Numbers, Body):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
@@ -72,8 +92,7 @@ def call(Numbers):
 # a = ["+18604605536", "+19802970490", "+18603264336"]
 # SMS(a, "Yo this is Steve. Pumped to get in tomorrow let's throw a banger.")
 
-if __name__ == "__main__":
-    receive()
+#if __name__ == "__main__":
 
 
     ''' message.replace("<Say>", "<Response><Say>")
