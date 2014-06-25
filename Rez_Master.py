@@ -18,19 +18,18 @@ DEBUG_DICTIONARY = []
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods = ['GET', 'POST'])
 def hello():
-    return 'Hello!'
+    resp = twilio.twiml.Response()
+    resp.say("Hello Monkey")
+    return str(resp)
 
 @app.route('/abc', methods = ['GET', 'POST'])
 def receive():
     from_num = request.values.get('From', None)
     incMessage = request.values.get('Body')
-    resp = twilio.twiml.response()
-    resp.say("Hello Tim.")
-    return str(resp)
-    #sms([from_num], incMessage)
-    #call([from_num])
+    sms([from_num], incMessage)
+    call([from_num])
     #DEBUG_DICTIONARY.append(from_num)
     #DEBUG_DICTIONARY.append(incMessage)
     #resp = twilio.twiml.Response()
