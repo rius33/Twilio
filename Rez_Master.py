@@ -53,7 +53,7 @@ def receiveCall():
     else:
         caller = "Nemo"
     resp = twilio.twiml.Response()
-    resp.say("Hello, " + caller)
+    resp.say("Hello, " + caller, voice="woman")
     with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
         g.say("To speak to a real person, press 1. Press any other key to start over.")
     return str(resp)
@@ -80,17 +80,17 @@ def deb():
 def con():
     resp = twilio.twiml.Response()
     resp.say("Joining the conference.")
-    # lounge = twilio.twiml.Conference()
-    # resp.dial(lounge)
+    resp.dial(Conference="Lounge")
     return str(resp)
 
 def sms(Numbers, Body):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-    message = client.messages.create(
-        to=Numbers[0],
-        from_=T_NUM, #Twilio number
-        body=Body, #Body is Str of message NOT TWIML
-    )
+    for number in Numbers:
+        message = client.messages.create(
+            to=number,
+            from_=T_NUM, #Twilio number
+            body=Body, #Body is Str of message NOT TWIML
+        )
     print message.sid
 
 
