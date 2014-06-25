@@ -17,7 +17,8 @@ E_NUM = '+16304733343'
 CALLERS = {
         "+18604605536": "Thomas",
         "+18609176080": "James",
-        "+19802970490": "Miles"
+        "+19802970490": "Miles",
+        "+18603264336": "Tim"
 }
 DEBUG_DICTIONARY = []
 
@@ -33,11 +34,13 @@ def hello():
 def receiveSMS():
     from_num = request.values.get('From', None)
     incMessage = request.values.get('Body')
-    if (from_num) in CALLERS:
-        caller = CALLERS[from_num]
-    else:
-        caller = "Nemo"
-    sms([from_num], "Hello " + caller)
+    if (CALLERS[from_num] == "Tim"):
+        sms(["+18603264336"], from_num + " " + incMessage)
+    # if (from_num) in CALLERS:
+    #     caller = CALLERS[from_num]
+    # else:
+    #     caller = "Nemo"
+    # sms([from_num], "Hello " + caller)
     # Say a command, and listen for the caller to press a key. When they press
     # a key, redirect them to /handle-key.
     # with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
@@ -80,8 +83,7 @@ def deb():
 def con():
     resp = twilio.twiml.Response()
     resp.say("Joining the conference.")
-    lounge = twilio.twiml.Response().dial().conference()
-    resp.dial(conference=lounge)
+    resp.dial(conference="Lounge")
     return str(resp)
 
 def sms(Numbers, Body):
