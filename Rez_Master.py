@@ -55,7 +55,7 @@ def receiveCall():
     resp = twilio.twiml.Response()
     resp.say("Hello, " + caller, voice="woman")
     with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
-        g.say("To speak to a real person, press 1. Press any other key to start over.")
+        g.say("To speak to Tim, press 1. To access the conference line, press 2.")
     return str(resp)
 
 
@@ -65,7 +65,7 @@ def handle():
     digit_pressed = request.values.get('Digits', None)
     if digit_pressed == "1":
         resp = twilio.twiml.Response()
-        resp.say("Thank you for pressing 1")
+        resp.dial(T_NUM)
         return str(resp)
     if digit_pressed == "2":
         return redirect("/conference")
@@ -81,7 +81,6 @@ def con():
     resp = twilio.twiml.Response()
     resp.say("Joining the conference.")
     resp.dial(Conference="Lounge")
-    return str(resp)
 
 def sms(Numbers, Body):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
