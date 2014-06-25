@@ -36,7 +36,7 @@ def receive():
         caller = CALLERS[from_num]
     else:
         caller = "Nemo"
-    sms([T_NUM], caller)
+    print caller
     # sms([from_num], incMessage)
     # call([from_num])
     #DEBUG_DICTIONARY.append(from_num)
