@@ -26,8 +26,11 @@ def hello():
 def receive():
     from_num = request.values.get('From', None)
     incMessage = request.values.get('Body')
-    sms([from_num], incMessage)
-    call([from_num])
+    resp = twilio.twiml.response()
+    resp.say("Hello Tim.")
+    return str(resp)
+    #sms([from_num], incMessage)
+    #call([from_num])
     #DEBUG_DICTIONARY.append(from_num)
     #DEBUG_DICTIONARY.append(incMessage)
     #resp = twilio.twiml.Response()
