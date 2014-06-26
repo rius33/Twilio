@@ -11,6 +11,7 @@ from enVars import *
 
 #ACCOUNT_SID = "ACd44d711fa3867cbb1d77184dc48a69b2"
 #AUTH_TOKEN = "79f744af5e9e19fae4215c4a4b602flf"
+
 T_NUM = '+18602375985'
 E_NUM = '+16304733343'
 CALLERS = {
@@ -86,7 +87,7 @@ def con():
     # return str(resp)
 
 def sms(Numbers, Body):
-    client = TwilioRestClient(Account_Sid, Auth_Token)
+    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
     for number in Numbers:
         message = client.messages.create(
             to=number,
@@ -97,13 +98,13 @@ def sms(Numbers, Body):
 
 
 def call(Numbers):
-    client = TwilioRestClient(Account_Sid, Auth_Token)
+    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
     call = client.calls.create(to=Numbers[0],  # Any phone number
                            from_=T_NUM, # Must be a valid Twilio number
                            url="http://obscure-savannah-9638.herokuapp.com/")
 
 if __name__ == "__main__":
-    call(["+18603264336"])
+    sms(["+18603264336"], "Fuck you.")
 
 
     ''' message.replace("<Say>", "<Response><Say>")
