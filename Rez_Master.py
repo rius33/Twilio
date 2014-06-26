@@ -103,8 +103,8 @@ def call(Numbers):
                            from_=T_NUM, # Must be a valid Twilio number
                            url="http://obscure-savannah-9638.herokuapp.com/")
 
-if __name__ == "__main__":
-    call(["+18603264336"])
+#if __name__ == "__main__":
+
 
 
     ''' message.replace("<Say>", "<Response><Say>")
