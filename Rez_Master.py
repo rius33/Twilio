@@ -80,8 +80,7 @@ def deb():
 @app.route('/conference', methods=['GET', 'POST'])
 def con():
     return ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say>Joining the conference.</Say><Dial><Conference>"
-            +
-            "Lounge</Conference></Say></Response>")
+            + "Lounge</Conference></Dial></Response>")
     # resp = twilio.twiml.Response()
     # resp.say("Joining the conference.")
     # resp.dial(conference="Lounge")
