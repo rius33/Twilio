@@ -28,7 +28,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def hello():
     resp = twilio.twiml.Response()
-    resp.say("Hello, we appreciate your call and will get back to you as soon as possible.")
+    resp.say("Fuck You.")
     return str(resp)
 
 @app.route('/7Boyden', methods=['GET', 'POST'])
@@ -38,6 +38,9 @@ def receiveSMS():
     if CALLERS[from_num] == "Tim":
         if body[0:2] == "-m":
             sms([body[3:15]], body[16:])
+            return
+        if body[0:2] == "-c":
+            call([body[3:15]])
         else:
             sms(["+18603264336"], from_num + " " + body)
     else:
