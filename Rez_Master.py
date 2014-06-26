@@ -8,10 +8,8 @@ from twilio import twiml
 from twilio.rest import TwilioRestClient
 from enVars import *
 
-
-#ACCOUNT_SID = "ACd44d711fa3867cbb1d77184dc48a69b2"
-#AUTH_TOKEN = "79f744af5e9e19fae4215c4a4b602flf"
-
+ACCOUNT_SID = "ACbdc62d802802d2191bdf844bfd208461"
+AUTH_TOKEN = "8238ad2b6e2bdd428391914b780fc5c4"
 T_NUM = '+18602375985'
 E_NUM = '+16304733343'
 CALLERS = {
@@ -104,7 +102,7 @@ def call(Numbers):
                            url="http://obscure-savannah-9638.herokuapp.com/")
 
 #if __name__ == "__main__":
-    sms(["+18603264336"], "Fuck you.")
+   #sms(["+18603264336"], "Fuck you.")
 
 
     ''' message.replace("<Say>", "<Response><Say>")
