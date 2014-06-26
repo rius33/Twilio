@@ -103,7 +103,7 @@ def call(Numbers):
                            from_=T_NUM, # Must be a valid Twilio number
                            url="http://obscure-savannah-9638.herokuapp.com/")
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     sms(["+18603264336"], "Fuck you.")
 
 
