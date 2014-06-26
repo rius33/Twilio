@@ -66,14 +66,14 @@ def handle():
     digit_pressed = request.values.get('Digits', None)
     if digit_pressed == "1":
         resp = twilio.twiml.Response()
-        resp.dial(T_NUM)
+        resp.dial("+18603264336")
         return str(resp)
     if digit_pressed == "2":
         return redirect("/conference")
     else:
         return redirect("/13Oak")
 
-@app.route('/Debug')
+@app.route('/debug')
 def deb():
     return str(DEBUG_DICTIONARY)
 
