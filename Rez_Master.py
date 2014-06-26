@@ -79,10 +79,13 @@ def deb():
 
 @app.route('/conference', methods=['GET', 'POST'])
 def con():
-    resp = twilio.twiml.Response()
-    resp.say("Joining the conference.")
-    resp.dial(conference="Lounge")
-    return str(resp)
+    return ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say>Joining the conference.</Say><Dial><Conference>"
+            +
+            "Lounge</Conference></Say></Response>")
+    # resp = twilio.twiml.Response()
+    # resp.say("Joining the conference.")
+    # resp.dial(conference="Lounge")
+    # return str(resp)
 
 def sms(Numbers, Body):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
