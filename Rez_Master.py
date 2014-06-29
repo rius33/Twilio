@@ -112,7 +112,7 @@ def call(Numbers, Body):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
     call = client.calls.create(to=Numbers[0],  # Any phone number
                            from_=T_NUM,
-                           url="http://obscure-savannah-9638.herokuapp.com/call/" + Body)
+                           url="http://obscure-savannah-9638.herokuapp.com/call/<" + Body + ">")
 
 # if __name__ == "__main__":
 #    sms(["+18603264336"], "Fuck you.")
