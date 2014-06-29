@@ -62,18 +62,19 @@ def receiveSMS():
     # else:
     #     sms(["+18603264336"], from_num + " " + body)
 
-#@app.route('/13Oak', methods=('GET', 'POST'))
-# def receiveCall():
-#     from_num = request.values.get('From', None)
-#     if (from_num) in CALLERS:
-#         caller = CALLERS[from_num]
-#     else:
-#         caller = "Nemo"
-#     resp = twilio.twiml.Response()
-#     resp.say("Hello, " + caller, voice="woman")
-#     with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
-#         g.say("To speak to Tim, press 1. To access the conference line, press 2.", voice="woman")
-#     return str(resp)
+@app.route('/13Oak', methods=('GET', 'POST'))
+def receiveCall():
+    pass
+    # from_num = request.values.get('From', None)
+    # if (from_num) in CALLERS:
+    #     caller = CALLERS[from_num]
+    # else:
+    #     caller = "Nemo"
+    # resp = twilio.twiml.Response()
+    # resp.say("Hello, " + caller, voice="woman")
+    # with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
+    #     g.say("To speak to Tim, press 1. To access the conference line, press 2.", voice="woman")
+    # return str(resp)
 #
 #
 #
