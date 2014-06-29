@@ -23,6 +23,10 @@ DEBUG_DICTIONARY = []
 
 app = Flask(__name__)
 
+@app.route('/', methods=['GET', 'POST'])
+def basic():
+    return "Hello World."
+
 @app.route("/call/<call_body>", methods=['GET', 'POST'])
 def hello(call_body):
     resp = twilio.twiml.Response()
