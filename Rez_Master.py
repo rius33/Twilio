@@ -35,6 +35,9 @@ def receiveSMS():
     body = request.values.get('Body')
     directions = body.split(':')
     if CALLERS[from_num] == "Tim":
+        DEBUG_DICTIONARY.append(directions[0])
+        DEBUG_DICTIONARY.append(directions[1])
+        DEBUG_DICTIONARY.append(directions[2])
         if directions[0] == "-m":
             sms([directions[1]], directions[2])
             return
@@ -106,10 +109,10 @@ def call(Numbers, Body):
                            from_=T_NUM,
                            url="http://obscure-savannah-9638.herokuapp.com/call/" + Body)
 
-#if __name__ == "__main__":
-   #sms(["+18603264336"], "Fuck you.")
+if __name__ == "__main__":
+   sms(["+18603264336"], "Fuck you.")
 
 
-    ''' message.replace("<Say>", "<Response><Say>")
+''' message.replace("<Say>", "<Response><Say>")
         message.replace("</Say>", "</Response></Say>")
-    '''
+'''
