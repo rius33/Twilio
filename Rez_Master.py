@@ -23,26 +23,35 @@ DEBUG_DICTIONARY = []
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
-def hello():
+@app.route("/call/<call_body>", methods=['GET', 'POST'])
+def hello(call_body):
     resp = twilio.twiml.Response()
-    resp.say("Fuck You.")
+    resp.say(call_body)
     return str(resp)
 
 @app.route('/7Boyden', methods=['GET', 'POST'])
 def receiveSMS():
     from_num = request.values.get('From', None)
     body = request.values.get('Body')
+    directions = body.split(':')
     if CALLERS[from_num] == "Tim":
-        if body[0:2] == "-m":
-            sms([body[3:15]], body[16:])
+        if directions[0] == "-m":
+            sms([directions[1]], directions[2])
             return
-        if body[0:2] == "-c":
-            call([body[3:15]])
-        else:
-            sms(["+18603264336"], from_num + " " + body)
+        elif directions[0] == "-c":
+            call(directions[1], directions[2])
+            return
     else:
-        sms(["+18603264336"], from_num + " " + body)
+        sms(["+18603264336"], directions[2])
+    # if body[0:2] == "-m":
+    #         sms([body[3:15]], body[16:])
+    #         return
+    #     if body[0:2] == "-c":
+    #         call([body[3:15]])
+    #     else:
+    #         sms(["+18603264336"], from_num + " " + body)
+    # else:
+    #     sms(["+18603264336"], from_num + " " + body)
 
 @app.route('/13Oak', methods=('GET', 'POST'))
 def receiveCall():
@@ -79,10 +88,6 @@ def deb():
 def con():
     return ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say>Joining the conference.</Say><Dial><Conference>"
             + "Lounge</Conference></Dial></Response>")
-    # resp = twilio.twiml.Response()
-    # resp.say("Joining the conference.")
-    # resp.dial(conference="Lounge")
-    # return str(resp)
 
 def sms(Numbers, Body):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
@@ -95,11 +100,11 @@ def sms(Numbers, Body):
     print message.sid
 
 
-def call(Numbers):
+def call(Numbers, Body):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
     call = client.calls.create(to=Numbers[0],  # Any phone number
-                           from_=T_NUM, # Must be a valid Twilio number
-                           url="http://obscure-savannah-9638.herokuapp.com/")
+                           from_=T_NUM,
+                           url="http://obscure-savannah-9638.herokuapp.com/call/" + Body)
 
 #if __name__ == "__main__":
    #sms(["+18603264336"], "Fuck you.")
