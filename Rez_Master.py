@@ -37,20 +37,16 @@ def receiveSMS():
     from_num = request.values.get('From', None)
     body = request.values.get('Body')
     directions = body.split(':')
-    for x in directions:
-        print x
     if CALLERS[from_num] == "Tim":
         DEBUG_DICTIONARY.append(directions[0])
         DEBUG_DICTIONARY.append(directions[1])
         DEBUG_DICTIONARY.append(directions[2])
         if directions[0] == "-m":
             sms([directions[1]], directions[2])
-            return
         elif directions[0] == "-c":
             call(directions[1], directions[2])
-            return
     else:
-        sms(["+18603264336"], directions[2])
+        sms(["+18603264336"], body)
     # if body[0:2] == "-m":
     #         sms([body[3:15]], body[16:])
     #         return
@@ -112,10 +108,10 @@ def call(Numbers, Body):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
     call = client.calls.create(to=Numbers[0],  # Any phone number
                            from_=T_NUM,
-                           url="http://obscure-savannah-9638.herokuapp.com/call/", call_body=Body)
+                           url="http://obscure-savannah-9638.herokuapp.com/call/<call_body/", call_body=Body)
 
-# if __name__ == "__main__":
-#    sms(["+18603264336"], "Fuck you.")
+if __name__ == "__main__":
+   call(["+18603264336"], "Fuck you.")
 
 
 # ''' message.replace("<Say>", "<Response><Say>")
