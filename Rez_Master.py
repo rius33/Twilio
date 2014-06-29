@@ -40,18 +40,18 @@ def receiveSMS():
     directions = body.split(':')
     for x in directions:
         print x
-    if CALLERS[from_num] == "Tim":
-        DEBUG_DICTIONARY.append(directions[0])
-        DEBUG_DICTIONARY.append(directions[1])
-        DEBUG_DICTIONARY.append(directions[2])
-        if directions[0] == "-m":
-            sms([directions[1]], directions[2])
-            return
+    # if CALLERS[from_num] == "Tim":
+    #     DEBUG_DICTIONARY.append(directions[0])
+    #     DEBUG_DICTIONARY.append(directions[1])
+    #     DEBUG_DICTIONARY.append(directions[2])
+    #     if directions[0] == "-m":
+    #         sms([directions[1]], directions[2])
+    #         return
         # elif directions[0] == "-c":
         #     call(directions[1], directions[2])
         #     return
-    else:
-        sms(["+18603264336"], directions[2])
+    # else:
+    #     sms(["+18603264336"], directions[2])
     # if body[0:2] == "-m":
     #         sms([body[3:15]], body[16:])
     #         return
