@@ -27,17 +27,19 @@ app = Flask(__name__)
 def hello():
     return "Hello World."
 
-@app.route("/call/<call_body>", methods=['GET', 'POST'])
-def basic(call_body):
-    resp = twilio.twiml.Response()
-    resp.say(call_body)
-    return str(resp)
+# @app.route("/call/<call_body>", methods=['GET', 'POST'])
+# def basic(call_body):
+#     resp = twilio.twiml.Response()
+#     resp.say(call_body)
+#     return str(resp)
 
 @app.route('/7Boyden', methods=['GET', 'POST'])
 def receiveSMS():
     from_num = request.values.get('From', None)
     body = request.values.get('Body')
     directions = body.split(':')
+    for x in directions:
+        print x
     if CALLERS[from_num] == "Tim":
         DEBUG_DICTIONARY.append(directions[0])
         DEBUG_DICTIONARY.append(directions[1])
@@ -45,9 +47,9 @@ def receiveSMS():
         if directions[0] == "-m":
             sms([directions[1]], directions[2])
             return
-        elif directions[0] == "-c":
-            call(directions[1], directions[2])
-            return
+        # elif directions[0] == "-c":
+        #     call(directions[1], directions[2])
+        #     return
     else:
         sms(["+18603264336"], directions[2])
     # if body[0:2] == "-m":
@@ -60,41 +62,41 @@ def receiveSMS():
     # else:
     #     sms(["+18603264336"], from_num + " " + body)
 
-@app.route('/13Oak', methods=('GET', 'POST'))
-def receiveCall():
-    from_num = request.values.get('From', None)
-    if (from_num) in CALLERS:
-        caller = CALLERS[from_num]
-    else:
-        caller = "Nemo"
-    resp = twilio.twiml.Response()
-    resp.say("Hello, " + caller, voice="woman")
-    with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
-        g.say("To speak to Tim, press 1. To access the conference line, press 2.", voice="woman")
-    return str(resp)
-
-
-
-@app.route('/handle-key', methods=['GET', 'POST'])
-def handle():
-    digit_pressed = request.values.get('Digits', None)
-    if digit_pressed == "1":
-        resp = twilio.twiml.Response()
-        resp.dial("+18603264336")
-        return str(resp)
-    if digit_pressed == "2":
-        return redirect("/conference")
-    else:
-        return redirect("/13Oak")
+#@app.route('/13Oak', methods=('GET', 'POST'))
+# def receiveCall():
+#     from_num = request.values.get('From', None)
+#     if (from_num) in CALLERS:
+#         caller = CALLERS[from_num]
+#     else:
+#         caller = "Nemo"
+#     resp = twilio.twiml.Response()
+#     resp.say("Hello, " + caller, voice="woman")
+#     with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
+#         g.say("To speak to Tim, press 1. To access the conference line, press 2.", voice="woman")
+#     return str(resp)
+#
+#
+#
+# @app.route('/handle-key', methods=['GET', 'POST'])
+# def handle():
+#     digit_pressed = request.values.get('Digits', None)
+#     if digit_pressed == "1":
+#         resp = twilio.twiml.Response()
+#         resp.dial("+18603264336")
+#         return str(resp)
+#     if digit_pressed == "2":
+#         return redirect("/conference")
+#     else:
+#         return redirect("/13Oak")
 
 @app.route('/debug')
 def deb():
     return str(DEBUG_DICTIONARY)
 
-@app.route('/conference', methods=['GET', 'POST'])
-def con():
-    return ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say>Joining the conference.</Say><Dial><Conference>"
-            + "Lounge</Conference></Dial></Response>")
+# @app.route('/conference', methods=['GET', 'POST'])
+# def con():
+#     return ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say>Joining the conference.</Say><Dial><Conference>"
+#             + "Lounge</Conference></Dial></Response>")
 
 def sms(Numbers, Body):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
@@ -107,16 +109,16 @@ def sms(Numbers, Body):
     print message.sid
 
 
-def call(Numbers, Body):
-    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-    call = client.calls.create(to=Numbers[0],  # Any phone number
-                           from_=T_NUM,
-                           url="http://obscure-savannah-9638.herokuapp.com/call/" + Body)
+# def call(Numbers, Body):
+#     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
+#     call = client.calls.create(to=Numbers[0],  # Any phone number
+#                            from_=T_NUM,
+#                            url="http://obscure-savannah-9638.herokuapp.com/call/" + Body)
 
-if __name__ == "__main__":
-   sms(["+18603264336"], "Fuck you.")
+# if __name__ == "__main__":
+#    sms(["+18603264336"], "Fuck you.")
 
 
-''' message.replace("<Say>", "<Response><Say>")
-        message.replace("</Say>", "</Response></Say>")
-'''
+# ''' message.replace("<Say>", "<Response><Say>")
+#         message.replace("</Say>", "</Response></Say>")
+# '''
