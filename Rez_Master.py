@@ -23,9 +23,9 @@ DEBUG_DICTIONARY = []
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def hello():
-    return "Hello World."
+    return 'Hello World.'
 
 # @app.route("/call/<call_body>", methods=['GET', 'POST'])
 # def basic(call_body):
