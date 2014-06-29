@@ -2,7 +2,7 @@ __author__ = 'DT'
 
 
 import os
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, url_for
 import twilio
 from twilio import twiml
 from twilio.rest import TwilioRestClient
@@ -108,7 +108,7 @@ def call(Numbers, Body):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
     call = client.calls.create(to=Numbers[0],  # Any phone number
                            from_=T_NUM,
-                           url="http://obscure-savannah-9638.herokuapp.com/call/<call_body/", call_body=Body)
+                           url="http://obscure-savannah-9638.herokuapp.com/" + url_for('basic', call_body=Body))
 
 if __name__ == "__main__":
    call(["+18603264336"], "Fuck you.")
