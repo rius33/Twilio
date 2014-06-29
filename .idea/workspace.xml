@@ -32,9 +32,11 @@
       <file leaf-file-name="Rez_Master.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Rez_Master.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.3120568" vertical-offset="360" max-vertical-offset="1875">
-              <caret line="66" column="4" selection-start-line="66" selection-start-column="4" selection-end-line="66" selection-end-column="4" />
-              <folding />
+            <state vertical-scroll-proportion="0.24822696" vertical-offset="0" max-vertical-offset="1935">
+              <caret line="7" column="40" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
+              <folding>
+                <element signature="e#20#29#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -653,9 +655,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Rez_Master.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3120568" vertical-offset="360" max-vertical-offset="1875">
-          <caret line="66" column="4" selection-start-line="66" selection-start-column="4" selection-end-line="66" selection-end-column="4" />
-          <folding />
+        <state vertical-scroll-proportion="0.24822696" vertical-offset="0" max-vertical-offset="1935">
+          <caret line="7" column="40" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

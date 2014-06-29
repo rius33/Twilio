@@ -6,7 +6,6 @@ from flask import Flask, request, redirect
 import twilio
 from twilio import twiml
 from twilio.rest import TwilioRestClient
-from enVars import *
 
 ACCOUNT_SID = "ACbdc62d802802d2191bdf844bfd208461"
 AUTH_TOKEN = "8238ad2b6e2bdd428391914b780fc5c4"
