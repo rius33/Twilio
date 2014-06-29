@@ -44,6 +44,8 @@ def receiveSMS():
         if directions[0] == "-m":
             sms([directions[1]], directions[2])
         elif directions[0] == "-c":
+            print directions[1]
+            print directions[2]
             call(directions[1], directions[2])
     else:
         sms(["+18603264336"], body)
