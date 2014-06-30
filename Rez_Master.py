@@ -19,7 +19,7 @@ CALLERS = {
         "+16462563954": "Eddie"
 }
 DEBUG_DICTIONARY = []
-
+from_num = ""
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -99,7 +99,7 @@ def deb():
 @app.route('/conference', methods=['GET', 'POST'])
 def con():
     DEBUG_DICTIONARY.append("Reached conference.")
-    num = request.values.get('From', None)
+    num = from_num
     DEBUG_DICTIONARY.append(str(num))
     str = "<?xml version='1.0' encoding='UTF-8'?><Response><Say>"
     if (CALLERS[num] == "Tim"):
