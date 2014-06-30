@@ -100,7 +100,7 @@ def deb():
 def con():
     DEBUG_DICTIONARY.append("Reached conference.")
     num = request.values.get('From', None)
-    DEBUG_DICTIONARY.append(str(num)
+    DEBUG_DICTIONARY.append(str(num))
     str = "<?xml version='1.0' encoding='UTF-8'?><Response><Say>"
     if (CALLERS[num] == "Tim"):
         str += "Joining the conference as a moderator.</Say><Dial><Conference startConferenceOnEnter='true' "
