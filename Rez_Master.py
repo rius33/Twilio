@@ -98,19 +98,25 @@ def deb():
 
 @app.route('/conference', methods=['GET', 'POST'])
 def con():
+    DEBUG_DICTIONARY.append("Reached conference.")
     num = request.values.get('From', None)
+    DEBUG_DICTIONARY.append(str(num)
     str = "<?xml version='1.0' encoding='UTF-8'?><Response><Say>"
     if (CALLERS[num] == "Tim"):
         str += "Joining the conference as a moderator.</Say><Dial><Conference startConferenceOnEnter='true' "
-        str += "endConferenceOnExit='true'>Lounge</Conference></Dial><Say>You</Response>"
+        str += "endConferenceOnExit='true'>Lounge</Conference></Dial><Say>You\'re conference has ended.</Say></Respon" \
+               "se>"
+        DEBUG_DICTIONARY.append(str)
         return str
     elif (num in CALLERS):
         str += "Joining the conference as a speaker.</Say><Dial><Conference startConferenceOnEnter='false'>Lounge" \
                "</Conference></Dial><Say>The conference has ended. Thank you for attending.</Say></Response>"
+        DEBUG_DICTIONARY.append(str)
         return str
     else:
         str += "Joining the conference as a listener.</Say><Dial><Conference startConferenceOnEnter='false' muted='tr" \
                "ue'>Lounge</Conference></Dial><The conference has ended. Thank you for listening.</Say></Response>"
+        DEBUG_DICTIONARY.append(str)
         return str
 
 def sms(Numbers, Body):
