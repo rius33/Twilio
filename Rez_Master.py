@@ -38,26 +38,14 @@ def receiveSMS():
     body = request.values.get('Body')
     directions = body.split(':')
     if CALLERS[from_num] == "Tim":
-        DEBUG_DICTIONARY.append(directions[0])
-        DEBUG_DICTIONARY.append(directions[1])
-        DEBUG_DICTIONARY.append(directions[2])
         if directions[0] == "-m":
             sms([directions[1]], directions[2])
         elif directions[0] == "-c":
-            print directions[1]
-            print directions[2]
             call([directions[1]], directions[2])
+        else:
+            sms(["+18603264336"], body)
     else:
-        sms(["+18603264336"], body)
-    # if body[0:2] == "-m":
-    #         sms([body[3:15]], body[16:])
-    #         return
-    #     if body[0:2] == "-c":
-    #         call([body[3:15]])
-    #     else:
-    #         sms(["+18603264336"], from_num + " " + body)
-    # else:
-    #     sms(["+18603264336"], from_num + " " + body)
+        sms(["+18603264336"], str(from_num) + " " + body)
 
 @app.route('/13Oak', methods=('GET', 'POST'))
 def receiveCall():
@@ -72,19 +60,37 @@ def receiveCall():
         g.say("To speak to Tim, press 1. To access the conference line, press 2.", voice="woman")
     return str(resp)
 
-
-
 @app.route('/handle-key', methods=['GET', 'POST'])
 def handle():
     digit_pressed = request.values.get('Digits', None)
     if digit_pressed == "1":
-        resp = twilio.twiml.Response()
-        resp.dial("+18603264336")
-        return str(resp)
+        str = "<?xml version='1.0' encoding='UTF-8'?><Response>"
+        str += "<Say>Connecting you to Tim. Please hold.</Say>"
+        str += "<Dial><Number url='/screen'>+18603264336</Number></Dial></Response>"
+        return str
     if digit_pressed == "2":
         return redirect("/conference")
     else:
         return redirect("/13Oak")
+
+@app.route('/screen', methods=['GET', 'POST'])
+def screencall():
+    str = "<?xml version='1.0' encoding='UTF-8'?><Response>"
+    str += "<Gather action='handle-screen' numDigits='1'><Say>To accept this call, press 1.</Say>"
+    str += "<Say>To decline this call, press any other number.</Say></Gather>"
+    str += "<Say>Sorry, your response was lost in translation.</Say><Redirect>'/screen'</Redirect></Response>"
+    return str
+
+@app.route('/handle-screen', methods=['GET', 'POST'])
+def decide():
+    digit_pressed = request.values.get('Digits', None)
+    str = "<?xml version='1.0' encoding='UTF-8'?><Response>"
+    if digit_pressed == "1":
+        str += "<Say>Connecting you to the caller</Say>"
+    else:
+        str += "<Hangup />"
+    str += "</Response>"
+    return str
 
 @app.route('/debug')
 def deb():
@@ -92,8 +98,20 @@ def deb():
 
 @app.route('/conference', methods=['GET', 'POST'])
 def con():
-    return ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say>Joining the conference.</Say><Dial><Conference>"
-            + "Lounge</Conference></Dial></Response>")
+    num = request.values.get('From', None)
+    str = "<?xml version='1.0' encoding='UTF-8'?><Response><Say>"
+    if (CALLERS[num] == "Tim"):
+        str += "Joining the conference as a moderator.</Say><Dial><Conference startConferenceOnEnter='true' "
+        str += "endConferenceOnExit='true'>Lounge</Conference></Dial><Say>You</Response>"
+        return str
+    elif (num in CALLERS):
+        str += "Joining the conference as a speaker.</Say><Dial><Conference startConferenceOnEnter='false'>Lounge" \
+               "</Conference></Dial><Say>The conference has ended. Thank you for attending.</Say></Response>"
+        return str
+    else:
+        str += "Joining the conference as a listener.</Say><Dial><Conference startConferenceOnEnter='false' muted='tr" \
+               "ue'>Lounge</Conference></Dial><The conference has ended. Thank you for listening.</Say></Response>"
+        return str
 
 def sms(Numbers, Body):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
@@ -112,8 +130,8 @@ def call(Numbers, Body):
                            from_=T_NUM,
                            url="http://obscure-savannah-9638.herokuapp.com" + url_for('basic', call_body=Body))
 
-if __name__ == "__main__":
-   call(["+18603264336"], "Fuck you.")
+# if __name__ == "__main__":
+#    call(["+18603264336"], "Fuck you.")
 
 
 # ''' message.replace("<Say>", "<Response><Say>")
