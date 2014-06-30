@@ -59,7 +59,7 @@ def receiveCall():
         with resp.gather(numDigits=1, action="/tconference", method="POST") as b:
             b.say("To initiate the conference, press 1. Press any other key to repeat this message.")
     with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
-        g.say("To speak to Tim, press 1. To access the conference line, press 2.", voice="woman")
+        g.say("To speak to Tim, press 1. To access the conference line, press 2.")
     return str(resp)
 
 @app.route('/tconference', methods=['GET', 'POST'])
@@ -67,8 +67,8 @@ def thandlekey():
     digit_pressed = request.values.get('Digits', None)
     if digit_pressed == "1":
         str = "<?xml version='1.0' encoding='UTF-8'?><Response><Say>Joining the conference as a listener.</Say><Dial>" \
-              "<Conference startConferenceOnEnter='false' muted='false'>Lounge</Conference></Dial><Say>The conference" \
-              " has ended. Thank you for listening.</Say></Response>"
+              "<Conference startConferenceOnEnter='true' muted='false' endConferenceOnExit='true'>Lounge</Conference>" \
+              "</Dial><Say>Your conference has ended.</Say></Response>"
         return str
     else:
         return redirect('/13Oak')
