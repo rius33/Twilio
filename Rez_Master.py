@@ -111,8 +111,8 @@ def con():
     #     DEBUG_DICTIONARY.append(str)
     #     return str
     # else:
-    str += "Joining the conference as a listener.</Say><Dial><Conference startConferenceOnEnter='false' muted='tr" \
-            "ue'>Lounge</Conference></Dial><The conference has ended. Thank you for listening.</Say></Response>"
+    str += "Joining the conference as a listener.</Say><Dial><Conference startConferenceOnEnter='false' muted='true'" \
+           ">Lounge</Conference></Dial><Say><The conference has ended. Thank you for listening.</Say></Response>"
     DEBUG_DICTIONARY.append(str)
     return str
 
