@@ -46,18 +46,33 @@ def receiveSMS():
     else:
         sms(["+18603264336"], str(from_num) + " " + body)
 
-@app.route('/13Oak', methods=('GET', 'POST'))
+@app.route('/13Oak', methods=['GET', 'POST'])
 def receiveCall():
     from_num = request.values.get('From', None)
-    if (from_num) in CALLERS:
+    if from_num in CALLERS:
         caller = CALLERS[from_num]
     else:
         caller = "Nemo"
     resp = twilio.twiml.Response()
-    resp.say("Hello, " + caller, voice="woman")
+    resp.say("Hello, " + caller)
+    if caller == "Tim":
+        with resp.gather(numDigits=1, action="/tconference", method="POST") as b:
+            b.say("To initiate the conference, press 1. Press any other key to repeat this message.")
     with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
         g.say("To speak to Tim, press 1. To access the conference line, press 2.", voice="woman")
     return str(resp)
+
+@app.route('/tconference', methods=['GET', 'POST'])
+def thandlekey():
+    digit_pressed = request.values.get('Digits', None)
+    if digit_pressed == "1":
+        str = "<?xml version='1.0' encoding='UTF-8'?><Response><Say>Joining the conference as a listener.</Say><Dial>" \
+              "<Conference startConferenceOnEnter='false' muted='false'>Lounge</Conference></Dial><Say>The conference" \
+              " has ended. Thank you for listening.</Say></Response>"
+        return str
+    else:
+        return redirect('/tconference')
+
 
 @app.route('/handle-key', methods=['GET', 'POST'])
 def handle():
@@ -105,13 +120,7 @@ def con():
     #            "se>"
     #     DEBUG_DICTIONARY.append(str)
     #     return str
-    # elif (num in CALLERS):
-    #     str += "Joining the conference as a speaker.</Say><Dial><Conference startConferenceOnEnter='false'>Lounge" \
-    #            "</Conference></Dial><Say>The conference has ended. Thank you for attending.</Say></Response>"
-    #     DEBUG_DICTIONARY.append(str)
-    #     return str
-    # else:
-    str += "Joining the conference as a listener.</Say><Dial><Conference startConferenceOnEnter='false' muted='true'" \
+    str += "Joining the conference as a listener.</Say><Dial><Conference startConferenceOnEnter='false' muted='false'" \
            ">Lounge</Conference></Dial><Say>The conference has ended. Thank you for listening.</Say></Response>"
     DEBUG_DICTIONARY.append(str)
     return str
