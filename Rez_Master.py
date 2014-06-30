@@ -71,7 +71,7 @@ def thandlekey():
               " has ended. Thank you for listening.</Say></Response>"
         return str
     else:
-        return redirect('/tconference')
+        return redirect('/13Oak')
 
 
 @app.route('/handle-key', methods=['GET', 'POST'])
